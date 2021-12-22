@@ -4,9 +4,601 @@
 <meta charset="utf-8">
 <title> Ulysses </title>
 <link href="style.css" rel="stylesheet"> 
+<script src="https://threejs.org/build/three.min.js"></script>
+<script src="https://threejs.org/examples/js/libs/tween.min.js"></script>
+<script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
+<body onLoad="Loaded()" onkeydown="KeyDown()">
+<audio src="Intro.mp3" type="audio/mp3" autoplay> </audio>
 <img id="LoadingScreen" src="UlyssesGameArtwork.jpg" width="400px" height="400px" alt="error"> 
+<img id="Ulysses" src="UlyssesModel.gif" width="400px" height="400px" alt="error">
+<img id="Info" src="PlayerSelect.png" alt="error"> 
+<img id="ChunkOne" src="ChunkOne.gif" height="400px" alt="error"> 
+<img id="ChunkTwo" src="ChunckTwo.gif" height="400px" alt="error"> 
+
+<img id="ChunkFive" src="ChunkFive.gif" height="400px" alt="error"> 
+
+
+<div id="Message"> <p id="MC"> Welcome Idoits!... </p> </div>
+<div id="PlayerOneSelection">  
+<input type="text" id="PlayerNameOne" spellcheck="false" placeholder="Name..." maxlength="10"> 
+<button id="PlayerOneSubmit" onclick="PlayerOneSubmission()"> Submit </button>
+<img id="SelectCharacterOne" src="P1WL.gif" alt="404" width="400px" height="400px">   
+</div>
+<div id="PlayerTwoSelection"> 
+<input type="text" id="PlayerNameTwo" spellcheck="false" placeholder="Name..." maxlength="10"> 
+<button id="PlayerTwoSubmit" onclick="PlayerTwoSubmission()"> Submit </button>
+<img id="SelectCharacterTwo" src="P1WL.gif" alt="404" width="400px" height="400px">  
+</div>
+<div id="PlayerThreeSelection"> 
+<input type="text" id="PlayerNameThree" spellcheck="false" placeholder="Name..." maxlength="10"> 
+<button id="PlayerThreeSubmit" onclick="PlayerThreeSubmission()"> Submit </button>
+<img id="SelectCharacterThree" src="P1WL.gif" alt="404" width="400px" height="400px">  
+</div> 
+
+<img id="Player2" src="P2WL.gif" alt="error"> 
+
+	
+<p id="LoadingText"> Loading </p>
+<p id="GameName"> Ulysses <br> v 1.000 </p>
+<button id="StartButton" onClick="StartName()"> Menu </button>
+	
+<script> 
+var LT = document.getElementById("LoadingText"); 
+	
+
+setInterval(LoadingText, 4000); 
+LoadingText();
+setInterval(NameCheck, 400); 
+function LoadingText() {
+	setTimeout(function(){LT.innerHTML = "Loading"}, 1000);
+	setTimeout(function(){LT.innerHTML = "Loading."}, 2000);
+	setTimeout(function(){LT.innerHTML = "Loading.."}, 3000);
+	setTimeout(function(){LT.innerHTML = "Loading..."}, 4000);
+}
+function Loaded() {
+	$("#LoadingText").fadeOut(1000); 
+	$("#GameName").fadeIn(1000); 
+	$("#StartButton").fadeIn(2000); 
+	$("#LoadingScreen").fadeIn(2000); 
+}
+var VaildSubOne = false; 
+var VaildSubTwo = false;
+var VaildSubThree = false;
+function NameCheck() {
+NEF = document.getElementById("PlayerNameOne").value;
+NES = document.getElementById("PlayerNameTwo").value;
+NET = document.getElementById("PlayerNameThree").value; //Checks If A Name Was Entered First In Input
+	if (NEF === "") {
+		VaildSubOne = false; 
+        $("#PlayerOneSubmit").animate({opacity: "0.1"});
+		document.getElementById("PlayerOneSubmit").style.cursor = "not-allowed";
+	}
+	else {
+		VaildSubOne = true; 
+		$("#PlayerOneSubmit").animate({opacity: "1"});
+		document.getElementById("PlayerOneSubmit").style.cursor = "pointer";  
+	}
+	if (NES === "") {
+		VaildSubTwo = false; 
+        $("#PlayerTwoSubmit").animate({opacity: "0.1"});
+		document.getElementById("PlayerTwoSubmit").style.cursor = "not-allowed";
+	}
+	else {
+		VaildSubTwo = true; 
+		$("#PlayerTwoSubmit").animate({opacity: "1"});
+		document.getElementById("PlayerTwoSubmit").style.cursor = "pointer";  
+	}
+	if (NET === "") {
+		VaildSubThree = false; 
+        $("#PlayerThreeSubmit").animate({opacity: "0.1"});
+		document.getElementById("PlayerThreeSubmit").style.cursor = "not-allowed";
+	}
+	else {
+		VaildSubThree = true; 
+		$("#PlayerThreeSubmit").animate({opacity: "1"});
+		document.getElementById("PlayerThreeSubmit").style.cursor = "pointer";  
+	}
+}
+APS = true; //Aniate Player Selection
+function StartName() {
+ if (APS) {
+document.getElementById("StartButton").innerHTML = "Start Game"; 
+$("#GameName").fadeOut(1000); 
+$("#Info").animate({left: "0%"}); 
+$("#PlayerOneSelection").animate({left: "15%"}); 
+$("#PlayerTwoSelection").animate({left: "40%"}); 
+$("#PlayerThreeSelection").animate({left: "65%"});
+$("#Ulysses").animate({top: "63%"}); 
+$("#Message").animate({top: "85%"}); 
+APS = false; 
+setInterval(SubmissionCheck, 400);
+document.getElementById("StartButton").disabled = true; }
+else {
+	StartGame(); 
+}
+
+}
+var SubmittedOne = false; 
+function PlayerOneSubmission() {
+if (VaildSubOne) {
+SubmittedOne = true; 
+$("#PlayerOneSubmit").fadeOut(1000); 
+document.getElementById("PlayerNameOne").disabled = true; 
+}
+
+}
+var SubmittedTwo = false; 
+function PlayerTwoSubmission() {
+if (VaildSubTwo) {
+SubmittedTwo = true; 
+$("#PlayerTwoSubmit").fadeOut(1000); 
+document.getElementById("PlayerNameTwo").disabled = true; 
+}
+
+}
+var SubmittedThree = false; 
+function PlayerThreeSubmission() {
+if (VaildSubThree) {
+SubmittedThree = true; 
+$("#PlayerThreeSubmit").fadeOut(1000); 
+document.getElementById("PlayerNameThree").disabled = true; 
+}
+
+}
+function SubmissionCheck() { 
+	if (SubmittedOne == true && SubmittedTwo == true && SubmittedThree == true) {
+		document.getElementById("StartButton").disabled = false; 
+		document.getElementById("StartButton").style.cursor = "pointer"; 
+		$("#StartButton").animate({opacity: "1"});
+	} 
+	else {
+		document.getElementById("StartButton").disabled = true; 
+		document.getElementById("StartButton").style.cursor = "not-allowed"; 
+		$("#StartButton").animate({opacity: "0.1"});
+	}
+}
+function StartGame() {
+	$("#Info").fadeOut(1000);
+	localStorage.setItem("ChracterOne", "Jack"); 
+    $("#PlayerOneSelection").fadeOut(1000); 
+    $("#PlayerTwoSelection").fadeOut(1000); 
+    $("#PlayerThreeSelection").fadeOut(1000); 
+	$("#StartButton").animate({top: "300%"}); 
+	$("#StartButton").fadeOut(1); 
+	$("#GameName").animate({top: "150%"}); 
+	$("#GameName").fadeOut(1); 
+	$("#LoadingScreen").animate({top: "150%"}); 
+	$("#LoadingScreen").fadeOut(1); 
+	setTimeout(InitializeThreeJs, 3000); 
+}
+
+function InitializeThreeJs() {
+scene = new THREE.Scene(); 
+scene.background = new THREE.TextureLoader().load("ChunkOne.gif")
+ camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 45, 30000); 
+  camera.position.set(0,-1000, 20000); 
+   renderer = new THREE.WebGLRenderer({ antialias: true }); 
+    renderer.setSize(window.innerWidth, window.innerHeight); 
+	 document.body.appendChild(renderer.domElement); 
+      renderer.domElement.id = "canvas"; 
+	    Animate(); 
+}
+function AddDice() {
+dicematerial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}) 
+]; 
+material = new THREE.MeshFaceMaterial(dicematerial);  
+dicegeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+diceone = new THREE.Mesh(dicegeometry, material); 
+scene.add(diceone); 
+
+
+dicematerial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}) 
+]; 
+material2 = new THREE.MeshFaceMaterial(dicematerial2);  
+dicegeometry2 = new THREE.BoxGeometry(4000, 4000, 4000); 
+dicetwo = new THREE.Mesh(dicegeometry2, material2); 
+scene.add(dicetwo); 
+diceone.position.set(-4000,6000, 0);
+dicetwo.position.set(4000,6000, 0);
+}
+	
+function Animate() {
+renderer.render(scene, camera); 
+
+   requestAnimationFrame(Animate); 
+}
+
+
+function KeyDown() {
+if (AnimateDice) {
+diceone.position.set(-4000, AnimateUp, 0); 
+dicetwo.position.set(4000, AnimateUp, 0); 
+AnimateUp = AnimateUp + 300; 
+		if (AnimateUp > 15000) {
+			AnimateDice = false; 
+			scene.remove(diceone); 
+			scene.remove(dicetwo); 
+			DiceRoll(); 
+	}
+	else {
+		requestAnimationFrame(KeyDown);
+	}				
+	NextMessage(); 
+}
+
+
+
+}
+function DiceRoll() {
+const DiceAmount = Math.floor(Math.random() * 11) + 2; 
+if (DiceAmount === 2) {
+DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 3) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet1.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);	
+MoveCharacter();
+}
+if (DiceAmount === 4) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);	
+MoveCharacter();
+}
+if (DiceAmount === 5) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 6) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 7) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 8) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 9) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 9) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 10) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAmount === 11) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+MoveCharacter();
+}
+if (DiceAMount === 12) {
+	DiceMaterial = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+DiceMaterial2 = [ 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet2.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet5.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet4.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide}), 
+new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet6.png"), side: THREE.DoubleSide})
+]; 
+RolledDiceMaterial = new THREE.MeshFaceMaterial(DiceMaterial);  
+DiceGeometry = new THREE.BoxGeometry(4000, 4000, 4000); 
+RolledDice = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
+scene.add(RolledDice); 
+RolledDice.position.set(-4000,6000, 0);
+
+RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);  
+RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
+scene.add(RolledDiceTwo); 
+RolledDiceTwo.position.set(4000,6000, 0);
+}
+}
+
+AnimateDice = true; 
+AnimateUp = 6000; 
+
+function NextMessage() {
+	document.getElementById("MC").innerHTML = "Yess Queen"; 
+}
+
+window.addEventListener('resize', function(){
+		var width = window.innerWidth;
+		var height = window.innerHeight;
+		renderer.setSize(width,height)
+	});
+  
+</script>
 </body>
 </html>
