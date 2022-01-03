@@ -13,11 +13,10 @@
 <body onLoad="Loaded()" onkeydown="KeyDown()">
 <audio src="Intro.mp3" type="audio/mp3" autoplay> </audio>
 <img id="LoadingScreen" src="UlyssesGameArtwork.jpg" width="400px" height="400px" alt="error"> 
-<img id="Ulysses" src="UlyssesModel.gif" width="400px" height="400px" alt="error">
+<img id="Ulysses" src="P2WL.gif" width="400px" height="400px" alt="error">
 <img id="Info" src="PlayerSelect.png" alt="error"> 
 <img id="ChunkOne" src="ChunkOne.gif" height="400px" alt="error"> 
 <img id="ChunkTwo" src="ChunckTwo.gif" height="400px" alt="error"> 
-
 <img id="ChunkFive" src="ChunkFive.gif" height="400px" alt="error"> 
 
 
@@ -38,35 +37,79 @@
 <img id="SelectCharacterThree" src="P1WL.gif" alt="404" width="400px" height="400px">  
 </div> 
 
-<img id="Player2" src="P2WL.gif" alt="error"> 
+<img id="SolidBlack1" src="SolidBlack.jfif" alt="error" width="50px" height="50px">  
+<img id="SolidBlack2" src="SolidBlack.jfif" alt="error" width="50px" height="50px"> 
+
+<img id="PlayerOne" src="P1WL.gif" alt="error" width="50px" height="50px"> 
+<img id="PlayerTwo" src="P1WL.gif" alt="error" width="50px" height="50px"> 
+<img id="PlayerThree" src="P1WL.gif" alt="error" width="50px" height="50px"> 
+
+
 
 	
 <p id="LoadingText"> Loading </p>
 <p id="GameName"> Ulysses <br> v 1.000 </p>
-<button id="StartButton" onClick="StartName()"> Menu </button>
+
+<button id="StartButton" onclick="AnimateStart()"> Start </button> 
+<button id="PlayButton" onClick="AskName()"> Play </button>
+<button id="MinigamesButton" onClick="StartMenu()"> Miningames </button>
+<button id="RewardsButton" onClick="StartMenu()"> Rewards </button>
+<button id="AchivementsButton" onClick="StartMenu()"> Achivements </button>
+<button id="SettingsButton" onClick="StartMenu()"> Settings </button>
+
+<div id="PlayerTurnBanner"> Jack's Turn </div> 
+
+<p id="TurnCounter"> 0 </p>
 	
 <script> 
 var LT = document.getElementById("LoadingText"); 
-	
+var Loadedcheck = false; 
+var TurnCounter = 0;  
 
-setInterval(LoadingText, 4000); 
+setInterval(LoadingText, 800); 
 LoadingText();
 setInterval(NameCheck, 400); 
 function LoadingText() {
-	setTimeout(function(){LT.innerHTML = "Loading"}, 1000);
-	setTimeout(function(){LT.innerHTML = "Loading."}, 2000);
-	setTimeout(function(){LT.innerHTML = "Loading.."}, 3000);
-	setTimeout(function(){LT.innerHTML = "Loading..."}, 4000);
+	setTimeout(function(){LT.innerHTML = "Loading"}, 200);
+	setTimeout(function(){LT.innerHTML = "Loading."}, 400);
+	setTimeout(function(){LT.innerHTML = "Loading.."}, 600);
+	setTimeout(function(){LT.innerHTML = "Loading..."}, 800);
 }
+var AlreadyPlaying = localStorage.getItem("AlreadyPlaying"); 
 function Loaded() {
-	$("#LoadingText").fadeOut(1000); 
-	$("#GameName").fadeIn(1000); 
-	$("#StartButton").fadeIn(2000); 
-	$("#LoadingScreen").fadeIn(2000); 
+	if (AlreadyPlaying === "true") {
+	AddChunk(); 
+	}
+
+	else {
+	$("#Info").animate({left: "10%"}); 
+	$("#Info").animate({left: "-10%"});
+	$("#Info").animate({left: "0%"});  
+	$("#PlayButton").fadeIn(1000); 
+	$("#MinigamesButton").fadeIn(1000); 
+	$("#RewardsButton").fadeIn(1000); 
+	$("#AchivementsButton").fadeIn(1000); 
+	$("#SettingsButton").fadeIn(1000); 
+
+} }
+function StartMenu() {
+    $("#StartButton").animate({top: "150%"}); 
 }
 var VaildSubOne = false; 
 var VaildSubTwo = false;
 var VaildSubThree = false;
+
+var IfCalled = true; 
+function AskName() {
+	$("#PlayButton").animate({top: "-10%"}); 
+	$("#MinigamesButton").animate({left: "110%", top: "-10%"}); 
+	$("#RewardsButton").animate({left: "100%"}); 
+	$("#AchivementsButton").animate({left: "110%", top: "110%"}); 
+	$("#SettingsButton").animate({top: "110%"}); 
+	if (IfCalled) {
+	setTimeout(StartName, 1000);
+	IfCalled = false; };  
+}
 function NameCheck() {
 NEF = document.getElementById("PlayerNameOne").value;
 NES = document.getElementById("PlayerNameTwo").value;
@@ -104,21 +147,43 @@ NET = document.getElementById("PlayerNameThree").value; //Checks If A Name Was E
 }
 APS = true; //Aniate Player Selection
 function StartName() {
- if (APS) {
 document.getElementById("StartButton").innerHTML = "Start Game"; 
 $("#GameName").fadeOut(1000); 
 $("#Info").animate({left: "0%"}); 
+$("#PlayerOneSelection").animate({left: "25%"}); 
+$("#PlayerTwoSelection").animate({left: "50%"}); 
+$("#PlayerThreeSelection").animate({left: "75%"});
+$("#PlayerOneSelection").animate({left: "5%"}); 
+$("#PlayerTwoSelection").animate({left: "30%"}); 
+$("#PlayerThreeSelection").animate({left: "55%"});
+$("#PlayerOneSelection").animate({left: "20%"}); 
+$("#PlayerTwoSelection").animate({left: "45%"}); 
+$("#PlayerThreeSelection").animate({left: "70%"});
+$("#PlayerOneSelection").animate({left: "10%"}); 
+$("#PlayerTwoSelection").animate({left: "35%"}); 
+$("#PlayerThreeSelection").animate({left: "60%"});
 $("#PlayerOneSelection").animate({left: "15%"}); 
 $("#PlayerTwoSelection").animate({left: "40%"}); 
 $("#PlayerThreeSelection").animate({left: "65%"});
-$("#Ulysses").animate({top: "63%"}); 
+$("#Ulysses").animate({top: "76%"}); 
+$("#Message").animate({top: "95%"}); 
+$("#Ulysses").animate({top: "56%"}); 
+$("#Message").animate({top: "75%"}); 
+$("#Ulysses").animate({top: "71%"}); 
+$("#Message").animate({top: "90%"}); 
+$("#Ulysses").animate({top: "61%"}); 
+$("#Message").animate({top: "80%"}); 
+$("#Ulysses").animate({top: "66%"}); 
 $("#Message").animate({top: "85%"}); 
+ReciveMessage = true; 
+NextMessage(); 
+document.getElementById("PlayerNameOne").disabled = true; 
+document.getElementById("PlayerNameTwo").disabled = true; 
+document.getElementById("PlayerNameThree").disabled = true; 
+setTimeout(function(){$("#MC").fadeIn(1000)}, 500); 
 APS = false; 
 setInterval(SubmissionCheck, 400);
-document.getElementById("StartButton").disabled = true; }
-else {
-	StartGame(); 
-}
+document.getElementById("StartButton").disabled = true; 
 
 }
 var SubmittedOne = false; 
@@ -162,11 +227,9 @@ function SubmissionCheck() {
 }
 function StartGame() {
 	$("#Info").fadeOut(1000);
-	localStorage.setItem("ChracterOne", "Jack"); 
     $("#PlayerOneSelection").fadeOut(1000); 
     $("#PlayerTwoSelection").fadeOut(1000); 
     $("#PlayerThreeSelection").fadeOut(1000); 
-	$("#StartButton").animate({top: "300%"}); 
 	$("#StartButton").fadeOut(1); 
 	$("#GameName").animate({top: "150%"}); 
 	$("#GameName").fadeOut(1); 
@@ -177,9 +240,8 @@ function StartGame() {
 
 function InitializeThreeJs() {
 scene = new THREE.Scene(); 
-scene.background = new THREE.TextureLoader().load("ChunkOne.gif")
  camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 45, 30000); 
-  camera.position.set(0,-1000, 20000); 
+  camera.position.set(0,-1000, 20000); //scene.background = new THREE.TextureLoader().load("SpotLight.png"); 
    renderer = new THREE.WebGLRenderer({ antialias: true }); 
     renderer.setSize(window.innerWidth, window.innerHeight); 
 	 document.body.appendChild(renderer.domElement); 
@@ -219,33 +281,37 @@ dicetwo.position.set(4000,6000, 0);
 	
 function Animate() {
 renderer.render(scene, camera); 
-
    requestAnimationFrame(Animate); 
+   diceone.rotation.x += 0.2; 
+   diceone.rotation.y += 0.2; 
+   dicetwo.rotation.x += 0.2; 
+    dicetwo.rotation.y += 0.2; 
 }
 
-
+var ReciveMessage = false; 
 function KeyDown() {
 if (AnimateDice) {
 diceone.position.set(-4000, AnimateUp, 0); 
 dicetwo.position.set(4000, AnimateUp, 0); 
 AnimateUp = AnimateUp + 300; 
 		if (AnimateUp > 15000) {
+			AnimateUp = AnimateUp - 9300; 
 			AnimateDice = false; 
-			scene.remove(diceone); 
-			scene.remove(dicetwo); 
 			DiceRoll(); 
-	}
+			} 
 	else {
 		requestAnimationFrame(KeyDown);
 	}				
-	NextMessage(); 
-}
+	
+} 
+	}
 
 
 
-}
+var DiceAmount = undefined; 
 function DiceRoll() {
-const DiceAmount = Math.floor(Math.random() * 11) + 2; 
+$("#ChunkOne").fadeOut(1000); 
+DiceAmount = Math.floor(Math.random() * 11) + 2; 
 if (DiceAmount === 2) {
 DiceMaterial = [ 
 new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("DieNet3.png"), side: THREE.DoubleSide}),  
@@ -264,7 +330,9 @@ RolledDice.position.set(-4000,6000, 0);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
-MoveCharacter();
+localStorage.setItem("MoveAmount", DiceAmount); 
+MoveCharacter(); 
+
 }
 if (DiceAmount === 3) {
 	DiceMaterial = [ 
@@ -293,6 +361,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);	
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 4) {
@@ -323,6 +392,7 @@ RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2);
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);	
 MoveCharacter();
+localStorage.setItem("MoveAmount", DiceAmount); 
 }
 if (DiceAmount === 5) {
 	DiceMaterial = [ 
@@ -351,6 +421,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 6) {
@@ -380,6 +451,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 7) {
@@ -409,6 +481,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 8) {
@@ -438,6 +511,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 9) {
@@ -467,6 +541,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 9) {
@@ -496,6 +571,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 10) {
@@ -525,6 +601,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAmount === 11) {
@@ -554,6 +631,7 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
 MoveCharacter();
 }
 if (DiceAMount === 12) {
@@ -583,15 +661,351 @@ RolledDiceMaterial2 = new THREE.MeshFaceMaterial(DiceMaterial2);
 RolledDiceTwo = new THREE.Mesh(DiceGeometry, RolledDiceMaterial2); 
 scene.add(RolledDiceTwo); 
 RolledDiceTwo.position.set(4000,6000, 0);
+localStorage.setItem("MoveAmount", DiceAmount); 
+MoveCharacter(); 
 }
 }
 
-AnimateDice = true; 
+AnimateDice = false; 
 AnimateUp = 6000; 
+var CurrentMessage = 1; 
 
 function NextMessage() {
-	document.getElementById("MC").innerHTML = "Yess Queen"; 
+if (ReciveMessage) {
+if (CurrentMessage === 4) {
+ReciveMessage = false; 
+
 }
+if (CurrentMessage === 3) {
+	ReciveMessage = false; 
+	$("#MC").fadeOut(300); 
+	setTimeout(function(){
+	document.getElementById("MC").style.fontSize = "40px"; 
+	document.getElementById("MC").innerHTML = "Tell me your names...";
+	document.getElementById("MC").style.top = "-40%"
+    }, 500);
+	setTimeout(function(){
+    $("#MC").fadeIn(1000);	
+	}, 700);
+	setTimeout(function() {
+	$("#Ulysses").animate({top: "163%"}); 
+	$("#Message").animate({top: "185%"}); 
+	$("#PlayerOneSelection").animate({opacity: "1"}); 
+	$("#PlayerTwoSelection").animate({opacity: "1"}); 
+	$("#PlayerThreeSelection").animate({opacity: "1"}); 
+	document.getElementById("StartButton").style.display = "block";
+	$("#StartButton").animate({top: "75%"}); 
+	$("#StartButton").animate({top: "95%"}); 
+	$("#StartButton").animate({top: "80%"}); 
+	$("#StartButton").animate({top: "90%"}); 
+	$("#StartButton").animate({top: "85%"}); 
+	document.getElementById("PlayerNameOne").disabled = false; 
+	document.getElementById("PlayerNameTwo").disabled = false; 
+	document.getElementById("PlayerNameThree").disabled = false; 
+	CurrentMessage = CurrentMessage + 1; 
+	}, 2500);
+
+	}
+if (CurrentMessage === 2) {
+	ReciveMessage = false;
+	$("#MC").fadeOut(300); 
+	setTimeout(function(){
+    document.getElementById("MC").style.top = "-33%"
+	document.getElementById("MC").style.fontSize = "26px"; 
+	document.getElementById("MC").innerHTML = "First we need to collect some personal information for... Crypto Mining!!!! I mean nothing..."; 
+	}, 500);
+	setTimeout(function(){
+    $("#MC").fadeIn(1000);
+	ReciveMessage = true;
+	CurrentMessage = CurrentMessage + 1; 
+	}, 700);
+	setTimeout(NextMessage, 4500); 
+	
+
+	}
+	if (CurrentMessage === 1) {
+	CurrentMessage = CurrentMessage + 1; 
+	setTimeout(NextMessage, 2000); 
+}
+	}
+}
+var Stop = true; 
+function AnimateStart() {
+	if (Stop) {
+	Stop = false;
+	var StorePlayerOneName = document.getElementById("PlayerNameOne").value; 
+	var StorePlayerTwoName = document.getElementById("PlayerNameTwo").value; 
+	var StorePlayerThreeName = document.getElementById("PlayerNameThree").value; 
+	localStorage.setItem("PlayerOneName", StorePlayerOneName);
+	localStorage.setItem("PlayerTwoName", StorePlayerTwoName);
+	localStorage.setItem("PlayerThreeName", StorePlayerThreeName); 
+	document.getElementById("StartButton").disabled = true;  
+	$("#SolidBlack2").fadeIn(3000); 
+	$("#SolidBlack2").fadeOut(6000); 
+	setTimeout(function(){
+	document.getElementById("StartButton").style.display = "none"; 
+	document.getElementById("PlayerOneSelection").style.display = "none"; 
+	document.getElementById("PlayerTwoSelection").style.display = "none"; 
+	document.getElementById("PlayerThreeSelection").style.display = "none"; 
+	document.getElementById("Info").style.display = "none"; 
+	}, 3000); 
+	setTimeout(AddChunk, 3000); }
+}
+	
+var GetPlayerOneName = undefined; 
+var GetPlayerTwoName = undefined; 
+var GetPlayerThreeName = undefined; 
+function AddChunk() {
+	localStorage.setItem("AlreadyPlaying", "true");  
+	document.getElementById("ChunkOne").style.display = "block"; 
+	document.getElementById("PlayerOne").style.display = "block"; 
+	document.getElementById("PlayerTwo").style.display = "block"; 
+	document.getElementById("PlayerThree").style.display = "block";  
+	setTimeout(function(){
+	document.getElementById("MC").style.top = "-25%"
+	document.getElementById("MC").style.fontSize = "30px"; 
+	document.getElementById("MC").innerHTML = "We need to know the order in which you die..."; 
+	$("#Ulysses").animate({top: "73%"}); 
+	$("#Message").animate({top: "95%"}); 
+	$("#Ulysses").animate({top: "53%"}); 
+	$("#Message").animate({top: "75%"}); 
+	$("#Ulysses").animate({top: "68%"}); 
+	$("#Message").animate({top: "90%"}); 
+	$("#Ulysses").animate({top: "58%"}); 
+	$("#Message").animate({top: "80%"}); 
+	$("#Ulysses").animate({top: "63%"}); 
+	$("#Message").animate({top: "85%"}); 
+	}, 2000); 
+	setTimeout(function(){$("#MC").fadeOut(1000); }, 5000);
+	setTimeout(function(){
+	document.getElementById("MC").innerHTML = "Wait no, no, no, the warrior the goes first!"; 	
+	$("#MC").fadeIn(1000); }, 6000);
+	setTimeout(function(){$("#MC").fadeOut(1000); }, 9000);
+	setTimeout(function(){
+	document.getElementById("MC").style.fontSize = "35px"; 
+	document.getElementById("MC").style.top = "-40%"
+	document.getElementById("MC").innerHTML = "Roll these die (Totally not rigged)"; 	
+	$("#MC").fadeIn(1000);}, 10000);
+	setTimeout(function(){
+	$("#Ulysses").animate({top: "163%"}); 
+	$("#Message").animate({top: "185%"}); 
+	}, 13000); 
+	setTimeout(NewPlayerTurn, 15000); 
+
+}
+GetPlayerOneName = localStorage.getItem("PlayerOneName");
+GetPlayerTwoName = localStorage.getItem("PlayerTwoName");
+GetPlayerThreeName = localStorage.getItem("PlayerThreeName");
+var PlayerOneTurn = undefined; 
+function NewPlayerTurn() {
+	if (DeciedRoll === 2) {
+	GetPlayerOneName = localStorage.getItem("PlayerOneName");
+	GetPlayerTwoName = localStorage.getItem("PlayerTwoName");
+	GetPlayerThreeName = localStorage.getItem("PlayerThreeName"); 
+	$("#PlayerThree").animate({left: "45%", top: "50%", }, 3000);
+	$("#PlayerThree").css({Transform: "rotate(0deg)"});
+	$("#PlayerOne").fadeOut(3000); 
+	$("#PlayerTwo").fadeOut(3000); 
+	document.getElementById("PlayerTurnBanner").innerHTML = GetPlayerThreeName + "'s " + "Roll"; 
+	$("#PlayerTurnBanner").fadeIn(1000); 
+	setTimeout(InitializeThreeJs, 3000); 
+	setTimeout(function(){
+	AddDice(); 
+	AnimateDice = true; 
+	}, 4000); 
+	setTimeout(function(){ 
+	$("#PlayerTurnBanner").fadeOut(1000); 
+	}, 6000)
+	setTimeout(function(){
+	$("#ChunkOne").fadeOut(1000);
+	}, 6500);
+} 
+if (DeciedRoll === 1) {
+	GetPlayerOneName = localStorage.getItem("PlayerOneName");
+	GetPlayerTwoName = localStorage.getItem("PlayerTwoName");
+	GetPlayerThreeName = localStorage.getItem("PlayerThreeName"); 
+	$("#PlayerTwo").animate({left: "45%", top: "50%", }, 3000);
+	$("#PlayerTwo").css({Transform: "rotate(0deg)"});
+	$("#PlayerOne").fadeOut(3000); 
+	$("#PlayerThree").fadeOut(3000); 
+	document.getElementById("PlayerTurnBanner").innerHTML = GetPlayerTwoName + "'s " + "Roll"; 
+	$("#PlayerTurnBanner").fadeIn(1000); 
+	setTimeout(InitializeThreeJs, 3000); 
+	setTimeout(function(){
+	AddDice(); 
+	AnimateDice = true; 
+	}, 4000); 
+	setTimeout(function(){ 
+	$("#PlayerTurnBanner").fadeOut(1000); 
+	}, 6000)
+	setTimeout(function(){
+	$("#ChunkOne").fadeOut(1000);
+	}, 6500);
+} 
+if (DeciedRoll === 0) {
+	GetPlayerOneName = localStorage.getItem("PlayerOneName");
+	GetPlayerTwoName = localStorage.getItem("PlayerTwoName");
+	GetPlayerThreeName = localStorage.getItem("PlayerThreeName"); 
+	$("#PlayerOne").animate({left: "45%", top: "50%"}, 3000);
+	$("#PlayerTwo").fadeOut(3000); 
+	$("#PlayerThree").fadeOut(3000); 
+	document.getElementById("PlayerTurnBanner").innerHTML = GetPlayerOneName + "'s " + "Roll"; 
+	$("#PlayerTurnBanner").fadeIn(1000); 
+	setTimeout(InitializeThreeJs, 3000); 
+	setTimeout(function(){
+	AddDice(); 
+	AnimateDice = true; 
+	}, 4000); 
+	setTimeout(function(){ 
+	$("#PlayerTurnBanner").fadeOut(1000); 
+	}, 6000)
+	setTimeout(function(){
+	$("#ChunkOne").fadeOut(1000);
+	}, 6500);
+} 
+
+
+	
+}
+var Move = undefined; 
+var DeciedRoll = 0; 
+var StillDeciedIngRoll = true;
+function MoveCharacter() {
+Move = localStorage.getItem("MoveAmount"); 	
+if (StillDeciedIngRoll) {
+if (DeciedRoll === 2) {
+	localStorage.setItem("OrderPlayerThree", DiceAmount); 
+	setTimeout(function(){$("#ChunkOne").fadeIn(1000); }, 3000); 
+	setTimeout(function(){
+	$("#PlayerThree").animate({left: "12%", top: "75%"}, 1000);
+	$("#PlayerOne").fadeIn(2000); 
+	$("#PlayerTwo").fadeIn(2000); 
+	DeciedRoll = DeciedRoll + 1;
+	scene = null; 
+	setTimeout(DeciedOrder, 3000); 
+	$("#PlayerThree").css({Transform: "rotate(20deg)"});
+}, 5000); }
+if (DeciedRoll === 1) {
+	localStorage.setItem("OrderPlayerTwo", DiceAmount); 
+	setTimeout(function(){$("#ChunkOne").fadeIn(1000); }, 3000); 
+	setTimeout(function(){
+	$("#PlayerTwo").animate({left: "6%", top: "70%"}, 1000);
+	$("#PlayerOne").fadeIn(2000); 
+	$("#PlayerThree").fadeIn(2000); 
+	DeciedRoll = DeciedRoll + 1;
+	scene = null; 
+	$("#PlayerTwo").css({Transform: "rotate(10deg)"});
+}, 5000); 
+setTimeout(NewPlayerTurn, 7500); }
+if (DeciedRoll === 0) {
+	localStorage.setItem("OrderPlayerOne", DiceAmount); 
+	setTimeout(function(){$("#ChunkOne").fadeIn(1000); }, 3000); 
+	setTimeout(function(){
+	$("#PlayerOne").animate({left: "0%", top: "67%"}, 1000);
+	$("#PlayerTwo").fadeIn(2000); 
+	$("#PlayerThree").fadeIn(2000); 
+	DeciedRoll = DeciedRoll + 1; 
+	scene = null; 
+}, 5000); 
+setTimeout(NewPlayerTurn, 7500); } } 
+	
+ }
+var OnePlayer = undefined; 
+var TwoPlayer = undefined; 
+var ThreePlayer = undefined; 
+function DeciedOrder() {
+$("#Ulysses").animate({top: "73%"}); 
+$("#Message").animate({top: "95%"}); 
+$("#Ulysses").animate({top: "53%"}); 
+$("#Message").animate({top: "75%"}); 
+$("#Ulysses").animate({top: "68%"}); 
+$("#Message").animate({top: "90%"}); 
+$("#Ulysses").animate({top: "58%"}); 
+$("#Message").animate({top: "80%"}); 
+$("#Ulysses").animate({top: "63%"}); 
+$("#Message").animate({top: "85%"}); 
+OnePlayer = localStorage.getItem("OrderPlayerOne"); 
+TwoPlayer = localStorage.getItem("OrderPlayerTwo"); 
+ThreePlayer = localStorage.getItem("OrderPlayerThree");
+//If Player One Wins The Roll Off 
+document.getElementById("MC").style.fontSize = "35px"; 
+if (OnePlayer > TwoPlayer && OnePlayer > ThreePlayer) {
+	window.alert(GetPlayerOneName);
+	window.alert(OnePlayer); 
+	window.alert(TwoPlayer); 
+	window.alert(ThreePlayer); 
+document.getElementById("MC").innerHTML = "Ohh Unfortunate " + GetPlayerOneName + " Goes First"; 
+localStorage.setItem("TurnOrder1", "PlayerOne"); 
+if (TwoPlayer > ThreePlayer) {
+localStorage.setItem("TurnOrder2", "PlayerTwo"); 
+localStorage.setItem("TurnOrder3", "PlayerThree"); 	
+}
+if (ThreePlayer > TwoPlayer) {
+localStorage.setItem("TurnOrder2", "PlayerThree"); 
+localStorage.setItem("TurnOrder3", "PlayerTwo"); 	
+}}
+
+//If Player Two Wins The Roll Off
+if (TwoPlayer > ThreePlayer && TwoPlayer > OnePlayer) {
+	window.alert(GetPlayerTwoName);
+	window.alert(OnePlayer); 
+	window.alert(TwoPlayer); 
+	window.alert(ThreePlayer); 
+document.getElementById("MC").innerHTML = "Ohh Unfortunate " + GetPlayerTwoName + " Goes First"; 
+localStorage.setItem("TurnOrder1", "PlayerTwo"); 
+if (OnePlayer > ThreePlayer) {
+localStorage.setItem("TurnOrder2", "PlayerOne");
+localStorage.setItem("TurnOrder3", "PlayerThree"); 	 
+}
+if (ThreePlayer > OnePlayer) {
+localStorage.setItem("TurnOrder2", "PlayerThree"); 	
+localStorage.setItem("TurnOrder3", "PlayerOne");
+}}
+
+//If Player Three Wins The Roll Off
+if (ThreePlayer > TwoPlayer && ThreePlayer > OnePlayer) {
+	window.alert(GetPlayerThreeName);
+	window.alert(OnePlayer); 
+	window.alert(TwoPlayer); 
+	window.alert(ThreePlayer); 
+	document.getElementById("MC").innerHTML = "Ohh Unfortunate " + GetPlayerThreeName + " Goes First";
+	localStorage.setItem("TurnOrder1", "PlayerThree"); 
+if (TwoPlayer > OnePlayer) {
+
+}
+if (OnePlayer > TwoPlayer) {
+	
+}}
+
+//If A Tie Occurs 
+
+if (OnePlayer === TwoPlayer) {
+
+
+}
+if (OnePlayer === ThreePlayer) {
+	
+}
+if (TwoPlayer === OnePlayer) {
+
+}
+if (TwoPlayer === ThreePlayer) {
+	
+}
+if (ThreePlayer === TwoPlayer) {
+
+}
+if (ThreePlayer === OnePlayer) {
+	
+}
+if (OnePlayer === TwoPlayer && OnePlayer === ThreePlayer) {
+	window.alert("You All Got The Same Roll! That's A 0.02% Chance... I'm Resseting This Game"); 
+}
+
+
+}
+
+
 
 window.addEventListener('resize', function(){
 		var width = window.innerWidth;
@@ -602,3 +1016,4 @@ window.addEventListener('resize', function(){
 </script>
 </body>
 </html>
+ 
